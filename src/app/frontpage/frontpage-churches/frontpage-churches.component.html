@@ -1,0 +1,32 @@
+<app-frontnavbar></app-frontnavbar>
+
+<body>
+    <div class="container-fluid border-less ">
+    <div class="row ">
+ 
+        
+           <strong> <h1 class="offset-6 text-white fw-bold text-center">Harare Institute Of Technology <br>Churches On Campus</h1></strong>
+           <p class="offset-7 text-white">~"For where two or three gather in my name,there am i with them"(Matthew 18:20)</p>
+           
+    
+<div class="container">
+    <div class="row">
+        <div class="col " (click)="loadNoticeById(church.id)" *ngFor="let church of churches ">
+            
+            <div class= "  col-9 card  bg-dark"style="margin-top:5rem;margin-left:2rem">
+                <img src="{{church.churchPhoto}}" alt="" class="card-img-top">
+               <div class="card-body bg-transparent">
+                   <h5 class="card-title text-white">{{church.churchName}}</h5>
+                   <p class="card-text text-white">{{church.churchDetails}}</p>
+                   
+                    
+               </div>
+            </div>
+            </div>
+            
+    </div>
+</div>
+
+    </div>
+                </div>  
+</body>

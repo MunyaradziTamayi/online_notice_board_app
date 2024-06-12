@@ -1,0 +1,126 @@
+<app-navbar></app-navbar>
+<body>
+    <div class="container-fluid border-less ">
+    <div class="row ">
+ 
+        
+           <strong> <h1 class="offset-6 text-white fw-bold text-center">Harare Institute Of Technology <br>Churches On Campus</h1></strong>
+           <p class="offset-7 text-white">~"For where two or three gather in my name,there am i with them"(Matthew 18:20)</p>
+           <button  (click)="resetForm()"  name="post" class="btn btn-danger bg-danger offset-1  " data-bs-toggle="modal" data-bs-target="#addchurchmodal" style="border-radius: 5rem;width: 6rem;" ><span class="fa fa-edit"> </span>
+            POST</button>
+    
+<div class="container">
+    <div class="row">
+        <div class="col " (click)="loadNoticeById(church.id)" *ngFor="let church of churches ">
+            
+            <div class= "  col-9 card  bg-dark"style="margin-top:5rem;margin-left:2rem">
+                <img src="{{church.churchPhoto}}" alt="" class="card-img-top">
+               <div class="card-body bg-transparent">
+                   <h5 class="card-title text-white">{{church.churchName}}</h5>
+                   <p class="card-text text-white">{{church.churchDetails}}</p>
+                   <button (click)="loadNoticeById(church.id)" class="btn btn-sm btn-warning text-white me-2"data-bs-toggle="modal" data-bs-target="#updatechurchmodal">
+                    <i class="fa fa-edit"></i>
+                    </button>
+                    <button (click)="deleteNotice(church.id)" class="btn btn-sm btn-danger text-white me-2">
+                        <i class="fa fa-trash"></i>
+                    
+                    </button>
+               </div>
+            </div>
+            </div>
+            
+    </div>
+</div>
+
+    </div>
+                </div>  
+</body>
+<div 
+ class="modal fade" id="addchurchmodal" tabindex="-1" aria-labelledby="addchurchmodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg bg-dark">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 fw-bold offset-4" id="exampleModalLabel">Add Church Details</h1>
+          <button #closechurchmodal  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="javascript:void(0)" (save)="saveNotice()" >
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr *ngFor="let church of churches">
+                            <th> Church Name</th>
+                            <td>
+                                <textarea [(ngModel)]="church.churchName" name="churchdetails" class="form-control" required></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> Church Details</th>
+                            <td>
+                                <textarea [(ngModel)]="church.churchDetails" name="churchdetails" class="form-control" required></textarea>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <th>Church Photo (Images (URL))</th>
+                            <td>
+                                <td>
+                                    <input [(ngModel)]="church.churchPhoto" class="form-control" accept="image/*" required type="url" name="notice_media">
+                                </td>
+                                
+                           
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close <span class="fa fa-close"></span></button>
+          <button type="submit" (click)="saveNotice()" class="btn btn-primary">Save Notice <span class="fa fa-save"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="updatechurchmodal" tabindex="-1" aria-labelledby="updatechurchmodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 fw-bold offset-4" id="exampleModalLabel">Update church Details</h1>
+          <button #closeupdatechurchmodal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form >
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th>Church Name:</th>
+                            <td>
+                                <input type="text" name="churchName" [(ngModel)]="church.churchName" class="form-control" required/>
+                                   
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> Church Details</th>
+                            <td>
+                                <textarea [(ngModel)]="church.churchDetails" name="church_details" class="form-control" required></textarea>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <th>Church Photo (Images (URL))</th>
+                            <td>
+                                <input [(ngModel)]="church.churchPhoto" class="form-control" accept="image/*" required type="url" name="church_media">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close <span class="fa fa-close"></span></button>
+          <button type="button" (click)="updateNotice()" class="btn btn-primary">Save church<span class="fa fa-save"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>

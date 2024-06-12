@@ -1,0 +1,14 @@
+h1{
+    margin-top: 200px;
+}
+body{
+    background-image: url(https://images.pexels.com/photos/3756877/pexels-photo-3756877.jpeg?auto=compress&cs=tinysrgb&w=600);
+    background-image: no-repeat;
+    background-size: cover;
+    
+    
+}
+a{
+    color: black;
+    font-size: medium;
+}

@@ -1,0 +1,274 @@
+
+
+ 
+<body >
+    <header>
+        <app-navbar></app-navbar>
+    
+    </header>
+
+    <section class="container-fluid row bg-dark">
+       
+        <div class="card col-6 me-2 bg-dark "style="margin-top:6rem">
+            <table class="table table-borderless bg-dark ">
+                <tbody>
+                    <tr>
+                        <td>
+                            <h1 appTextcolorchange class="h3 text-white" ><Strong>Notices </Strong></h1>
+                            
+                           
+                        </td>
+                        <td>
+              
+                                    <button  (click)="resetForm()"  name="post" class="btn btn-danger bg-danger offset-4  "  data-bs-toggle="modal" data-bs-target="#addnoticemodal" style="border-radius: 5rem;width: 6rem;" ><span class="fa fa-edit"> </span>
+                                        POST</button>
+                        </td>
+                        <td>
+                            <input type="text" name="searchText" [(ngModel)]="searchText"  [(ngModel)]="club"  [(ngModel)]="event"  [(ngModel)]="general" [(ngModel)]="church" placeholder="&#xF002; Search" style="font-family:Arial, FontAwesome"
+                                class="form-control ">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-borderless bg-dark">
+                <tbody>
+                    <tr>
+                        
+                        <td>
+                            <button (click)="noticetypefilter()" name="Clubs" class="btn btn-lg btn-danger"> GENERAL</button>
+                        </td>
+                        <td>
+                            <button (click)="noticechurchfilter()"   name="churches"class="btn btn-lg btn-danger">CHURCHES</button>
+                        </td>
+                        <td>
+                            <button (click)=" noticeeventfilter()"   name="churches"class="btn btn-lg btn-danger">EVENTS</button>
+                        </td>
+                        <td>
+                            <button (click)="noticeclubfilter()"   name="churches"class="btn btn-lg btn-danger">CLUBS</button>
+                        </td>
+                      
+
+                        <td>
+                            
+                                <input type="number" name="items" style="width: 4rem;;margin-bottom: 15rem;" [min]="1" class="form-control mt-3 mb-3 offset-1" [(ngModel)]="items">
+                            
+                        </td>
+                        
+                    
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-borderless  notices-table bg-dark text-white ">
+                <tbody>
+                    <!-- <label>Sort by &nbsp;</label>
+                    <select [(ngModel)]='SortbyParam'>
+                        <option value="id">id</option>
+                        <option value="date">date</option>
+                    </select> -->
+                    <!-- |sort:[SortbyParam,'desc'] -->
+
+                    
+                    <tr appHighlight (click)= "loadNoticeById(notice.id)" *ngFor="let notice of notices|search: searchText|paginate:{ itemsPerPage: items, currentPage: p }|search:event|search:church|search:club|search:general; let i = index "
+                    
+                    
+                    >
+                        <td>
+                            {{notice.id}}
+                        </td>
+                        <div class="container">
+                            <div>
+                        <td>
+                            <img style="border-radius: 50%;"
+                                src="{{notice.user_photo}}"
+                                alt="">
+                        </td>
+                        
+                        
+                        <th>
+                           <strong> {{notice.posted_by}}</strong>
+                        
+                        </th>
+                       
+                    </div>
+                </div>
+                    
+<div>
+                        <td  class="ellipsis-text" >
+                          <strong> {{notice.notice_details}}</strong> 
+                            
+                        </td>
+                    
+                        <td>
+                           
+                            <button (click)="loadNoticeById(notice.id)" class="btn btn-sm btn-warning text-white me-2"data-bs-toggle="modal" data-bs-target="#updatenoticemodal">
+                                <i class="fa fa-edit"></i>
+                    
+                            </button>
+                            <button (click)="deleteNotice(notice.id)" class="btn btn-sm btn-danger text-white me-2">
+                                <i class="fa fa-trash"></i>
+                            
+                            </button>
+                           
+                            <span *ngIf="!userclickednotice" class="badge bg-danger">New</span>
+                            <span *ngIf="userclickednotice" class="badge bg-primary"></span>
+                        </td>
+                        <div>
+                            <td >Harare Institute Of Technology, ZW</td>
+                            <td>
+                                {{notice.posted_at}}
+                            </td>
+                            <td
+                                 class="reaction">
+                                 <button class="btn btn-sm btn-like btn-primary" (click)="likeclick(notice.notice_likes)">
+                                    <i class="fa fa-thumbs-up"></i> like <span class="badge badge-primary">{{notice_likes}}</span>
+                                  </button>
+                                
+                                  <button class="btn btn-sm btn-danger btn-unlike" (click)="unlikeClicked()">
+                                    <i class="fa fa-thumbs-down"></i> unlike<span class="badge badge-danger">{{ unlikeCount }}</span>
+                                  </button>
+              
+                            </td>
+                        </div>
+                        <hr>
+                    </div>
+                    </tr>
+                
+                </tbody>
+            </table>
+            <pagination-controls style="color: white;" (pageChange)="p = $event"></pagination-controls>
+
+
+        </div>
+
+        <div class="container col-4  bordered border-color-white"style="margin-top:8rem;background-image:url(data:image/png;base64,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vzkh6qr+vkJzHHj19ejJ9u1x81y8/ebZKG3U+1DVtkbv0eOxr6320aNt9+dj+vL7cerMUDxiFX9Nw/O/itf6izH23r/G6asLC1ekM479nxPRFiNx+t/fibGFpRui2BvHf3g0mh8aHb13/YN4880LX3uHiFW9Nott64/Xfn4wGqbOxl/eOLfMdCjVUbfre/HykcdtQ/MxO3ExBj4+t+Q2BKyNaIMnYXMh6orNsX1rXdQ1t5R3brOTo1GazT5OXYvS9EzMPdU30ayOQn1TNG0vRrH8+OZiemIibn9RivHrkzGX0qhIdbauG7N1XdweTc3bohAzURqbjNLU1bhRmot734l/4bLXK3uOLdvycpuJ6WsTUbrzVDegzEPbUEzFxMStmP1iIiZv3nrK2zd8N4k2AIAEuBABACABog0AIAGiDQAgAaINACABog0AIAGiDQAgAaINACABog0AIAGiDQAgAaINACABog0AIAGiDQAgAaINACABog0AIAGiDQAgAaINACABog0AIAGiDQAgAaINACABog1YXnX1wif8Q7MdwFNVtWd///2FzwG+oaHvF/GjF5pi08xQnH7jZIzNLXyBfyi2A3j6jLQBj1GMtl3Zjjr/tLY7Op8rL+Qfju0AngWiDf7RVBeiuLM/juxvXljwOKUYG5qMe/mnM4Nxeby88B/Gpq3N0XXwaHTULyz4h/WPvR3As8LhUfhHs/NE/NMPOiNG3onf/nVkYSHfVIzen/8q+raVYuCN38eFqYXFAE+JkTYAgASINgCABIg2AIAEiDYAgAS4EAFWqab9YBzorI/JCyfj0uTCwqraKO7ui7493dHcWBubqiqL790pRWnsYgycHYiJmcqyVamujaZdfbEvu9+mbbVRWDS36b2Z7L7HL8dnfx+IsdL8wtIl1LZH38HuqFv439jaHB3N9RFfTMSViVsLC7/yteeVe/D91wfizODiLzzepmJn9Ozvi46WpmioXfTA787E9M1rceXT8zE4Wop7y/0LtGgdLF63+f2UJobi0rmBGJ5cy8r9pmLP8ejZsfA/sSUa2tujWJiL0ujVmH54XrLbQ3H+k9GYXfjfpTxyHczPxexUtv4vnovByxMx+5iXb7UePIfpy+/HhWtruONt3fFCX3sUvhiKT86NxpdPew3bwaa6bFvb2x+7d7VEcdHzvzczGROXL8TAhcEoPeql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kADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgCQANEGAJAA0QYAkADRBgDwzIv4/wFB8aohetXuJwAAAABJRU5ErkJggg==)">
+            
+        <div *ngIf="notice.id != undefined && notice.id != null" class="card  items-align-center bg-dark text-white "style="margin-top:1rem;margin-left:1rem;height:35rem;width:35rem;">
+
+           <h1 class="text-muted text-center" style="margin-top: 2rem;">HITPEDIA &copy;</h1>
+          
+          <img style="width:30rem;height:20rem;"class="offset-1"  src="{{notice.notice_photo}}" alt="">  
+            <p class="h4 text-center">{{notice.notice_type}}</p>
+            <p class="offset-1"style="columns: 1;">{{notice.notice_details}}</p>
+            </div>
+            
+        </div>
+     
+        <!-- <div>
+            <img src="{{notice.notice_photo}}" alt="">
+        </div> -->
+        
+    </section>
+
+</body>
+
+<div 
+ class="modal fade" id="addnoticemodal" tabindex="-1" aria-labelledby="addnotticemodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg bg-dark">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 fw-bold offset-4" id="exampleModalLabel">Add Notice Details</h1>
+          <button #closenoticemodal  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="javascript:void(0)" (save)="saveNotice()" >
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th>Notice Type:</th>
+                            <td>
+                                <select formControlName="subject" name="subject" name="subject" [(ngModel)]="notice.notice_type" class="form-control" required>
+                                    <option value="undefined" selected disabled>Select Notice Type</option>
+                                    <option>General</option>
+                                    <option>Events</option>
+                                    <option>Clubs</option>
+                                    <option>Churches</option>
+                               
+                            </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> Notice Details</th>
+                            <td>
+                
+
+                                <textarea [(ngModel)]="notice.notice_details" name="notice_details" class="form-control" required></textarea>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <th>Notice Media (Images (URL))</th>
+                            <td>
+                                <input [(ngModel)]="notice.notice_photo" class="form-control" accept="image/*" required type="url" name="notice_media">
+                                
+                            </td>
+                        </tr>
+                       
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close <span class="fa fa-close"></span></button>
+          <button type="submit" (click)="saveNotice()" class="btn btn-primary">Save Notice <span class="fa fa-save"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="updatenoticemodal" tabindex="-1" aria-labelledby="updatenotticemodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg bg-light">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 fw-bold offset-4" id="exampleModalLabel">Update Notice Details</h1>
+          <button #closeupdatenoticemodal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form >
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th>Notice Type:</th>
+                            <td>
+                                <select name="notice_type" [(ngModel)]="notice.notice_type" class="form-control" required>
+                                    <option value="undefined" selected disabled>Select Notice Type</option>
+                                    <option value="general">General</option>
+                                    <option  value="events">Events</option>
+                                    <option  value="clubs">Clubs</option>
+                                    <option value="churches">Churches</option>
+                               
+                            </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> Notice Details</th>
+                            <td>
+                                <textarea [(ngModel)]="notice.notice_details" name="notice_details" class="form-control" required></textarea>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <th>Notice Media (Images (URL))</th>
+                            <td>
+                                <input [(ngModel)]="notice.notice_photo" class="form-control" accept="image/*" required type="url" name="notice_media">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close <span class="fa fa-close"></span></button>
+          <button type="button" (click)="updateNotice()" class="btn btn-primary">Save Notice <span class="fa fa-save"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+

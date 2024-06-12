@@ -1,0 +1,25 @@
+<body class="bg-transparent">
+    
+        <div class=" container-fluid row gy-4  ">
+          
+         
+            <div class="col-3 border border-2  border-color-black text-white offset-5 bg-transparent gx-5  content " style="margin-top: 19rem;position: relative;z-index: 1;color: white;padding: 20px;">
+                <h1 class="h1 text-center gy-3">Subscribe SMS </h1>
+             
+                <input [(ngModel)]="notice.userphoneNumber" type="text" placeholder="PhoneNumber" class="form-control mt-4  text-white bg-transparent">
+
+               
+                <button (click)="redirectToUrl()" type="submit" class="btn bg-white col-12 mt-3">Register number with vonage</button>
+
+                <label type="text" class="offset-2 mt-3 mb-5 ">Already have an account?</label>
+                
+            </div>
+
+        </div>
+        
+
+
+        
+        
+    
+</body>
